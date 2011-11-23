@@ -8,3 +8,8 @@ C:\Users\Pete\Dropbox\Projects\Fun\PoolVision\PoolVision\DShowNET\bin\Debug\DSho
 C:\Users\Pete\Dropbox\Projects\Fun\PoolVision\PoolVision\DShowNET\obj\Debug\ResolveAssemblyReference.cache
 C:\Users\Pete\Dropbox\Projects\Fun\PoolVision\PoolVision\DShowNET\obj\Debug\DShowNET.dll
 C:\Users\Pete\Dropbox\Projects\Fun\PoolVision\PoolVision\DShowNET\obj\Debug\DShowNET.pdb
+C:\Users\aaronm.LANIT\Desktop\Stuff\MagicVision\DShowNET\bin\Debug\DShowNET.dll
+C:\Users\aaronm.LANIT\Desktop\Stuff\MagicVision\DShowNET\bin\Debug\DShowNET.pdb
+C:\Users\aaronm.LANIT\Desktop\Stuff\MagicVision\DShowNET\obj\Debug\ResolveAssemblyReference.cache
+C:\Users\aaronm.LANIT\Desktop\Stuff\MagicVision\DShowNET\obj\Debug\DShowNET.dll
+C:\Users\aaronm.LANIT\Desktop\Stuff\MagicVision\DShowNET\obj\Debug\DShowNET.pdb

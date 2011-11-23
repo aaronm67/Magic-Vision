@@ -4,22 +4,16 @@
  */
 using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Windows.Forms;
-using System.Drawing.Imaging;
-using DirectX.Capture;
-using Microsoft.VisualBasic;
-using AForge;
-using AForge.Imaging;
-using AForge.Imaging.Filters;
-using AForge.Math.Geometry;
 using System.Diagnostics;
-using System.IO;
-
+using System.Drawing;
+using System.Drawing.Imaging;
+using System.Linq;
+using System.Windows.Forms;
+using DirectX.Capture;
+using AForge;
+using AForge.Imaging.Filters;
+using AForge.Imaging;
+using AForge.Math.Geometry;
 using Data;
 
 namespace PoolVision
@@ -41,8 +35,6 @@ namespace PoolVision
 	
 		public Data.CardStore sql;
 			
-        //public MySqlClient sql = new MySqlClient(SqlConString);
-
         public Form1()
         {
             InitializeComponent();
@@ -53,7 +45,8 @@ namespace PoolVision
             foreach (ReferenceCard card in referenceCards)
             {
                 Phash.ph_dct_imagehash(refCardDir + (String)card.dataRow["Set"] + "\\" + card.cardId + ".jpg", ref card.pHash);
-                sql.dbNone("UPDATE cards SET pHash=" + card.pHash.ToString() + " WHERE id=" + card.cardId);
+
+                sql.UpdateHash(card.cardId, card.pHash);
             }
         }
 
@@ -242,24 +235,7 @@ namespace PoolVision
 			capture.FrameEvent2 += new Capture.HeFrame(CaptureDone);
 			capture.GrapImg();
 
-            loadSourceCards();
-        }
-
-        private void loadSourceCards()
-        {
-            using (DataTable Reader = sql.dbResult("SELECT * FROM cards"))
-            {
-                foreach (DataRow r in Reader.Rows)
-                {
-                    ReferenceCard card = new ReferenceCard();
-                    card.cardId = (String)r["id"];
-                    card.name = (String)r["Name"];
-                    card.pHash = (UInt64)r["pHash"];
-                    card.dataRow = r;
-
-                    referenceCards.Add(card);
-                }
-            }
+            referenceCards = sql.GetCards().ToList();
         }
 
         private void CaptureDone(System.Drawing.Bitmap e)
