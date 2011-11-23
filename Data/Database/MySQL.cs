@@ -63,14 +63,13 @@ namespace Data
         internal int dbNone(string query)
         {
             MySqlCommand command = sql.CreateCommand();
-            //MySqlDataReader Reader;
             command.CommandText = query;
             return command.ExecuteNonQuery();
         }
 
-        private MySqlClient(String SqlConString)
+        public MySqlClient()
         {
-            sql = new MySqlConnection(SqlConString);
+            sql = new MySqlConnection(MySqlConnectionString);
             sql.Open();
         }
 

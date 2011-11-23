@@ -56,7 +56,7 @@
             this.hashCalcButton.TabIndex = 0;
             this.hashCalcButton.Text = "Calculate Hashes";
             this.hashCalcButton.UseVisualStyleBackColor = true;
-            this.hashCalcButton.Click += new System.EventHandler(this.button1_Click);
+            this.hashCalcButton.Click += new System.EventHandler(this.hashCalcButton_Click);
             // 
             // label1
             // 
