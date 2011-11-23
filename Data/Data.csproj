@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
@@ -37,6 +37,7 @@
     <Compile Include="Models\MagicCard.cs" />
     <Compile Include="PHash\Phash.cs" />
     <Compile Include="Database\CardStore.cs" />
+    <Compile Include="Utilities\Utilities.cs" />
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>
@@ -57,6 +58,13 @@
     <Reference Include="AForge">
       <HintPath>..\MagicVision\AForge.NET\AForge.dll</HintPath>
     </Reference>
-    <Reference Include="System.XML" />
+    <Reference Include="System.Xml" />
+    <Reference Include="System.Data.SQLite.Linq, Version=2.0.38.0, Culture=neutral, PublicKeyToken=db937bc2d44ff139">
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="System.Core" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Utilities\" />
   </ItemGroup>
 </Project>

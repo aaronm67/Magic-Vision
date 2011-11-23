@@ -20,6 +20,7 @@ namespace PoolVision
 {
     public partial class Form1 : Form
     {
+		/*
         private Bitmap cameraBitmap;
         private Bitmap cameraBitmapLive;
         private Bitmap filteredBitmap;
@@ -32,6 +33,7 @@ namespace PoolVision
         private List<MagicCard> magicCardsLastFrame = new List<MagicCard>();
         private List<ReferenceCard> referenceCards = new List<ReferenceCard>();
         static readonly object _locker = new object();
+        */
 	
 		public Data.CardStore sql;
 			
@@ -49,25 +51,9 @@ namespace PoolVision
                 sql.UpdateHash(card.cardId, card.pHash);
             }
         }
-
-        double GetDeterminant(double x1, double y1, double x2, double y2)
-        {
-            return x1 * y2 - x2 * y1;
-        }
-
-        double GetArea(IList<IntPoint> vertices)
-        {
-            if (vertices.Count < 3)
-            {
-                return 0;
-            }
-            double area = GetDeterminant(vertices[vertices.Count - 1].X, vertices[vertices.Count - 1].Y, vertices[0].X, vertices[0].Y);
-            for (int i = 1; i < vertices.Count; i++)
-            {
-                area += GetDeterminant(vertices[i - 1].X, vertices[i - 1].Y, vertices[i].X, vertices[i].Y);
-            }
-            return area / 2;
-        }
+		
+		/*
+        */
 
         private void detectQuads(Bitmap bitmap)
         {
@@ -125,7 +111,7 @@ namespace PoolVision
                     if ((subType == PolygonSubType.Parallelogram || subType == PolygonSubType.Rectangle) &&  corners.Count == 4)
                     {
                         // Check if its sideways, if so rearrange the corners so it's veritcal
-                        rearrangeCorners(corners);
+                        corners = Utilities.rearrangeCorners(corners).ToList();
 
                         // Prevent it from detecting the same card twice
                         foreach (IntPoint point in cardPositions)
@@ -138,12 +124,13 @@ namespace PoolVision
                             continue;
 
                         // Hack to prevent it from detecting smaller sections of the card instead of the whole card
-                        if (GetArea(corners) < 20000)
+                        if (Utilities.GetArea(corners) < 20000)
                             continue;
                          
                         cardPositions.Add(corners[0]);
-
-                        g.DrawPolygon(pen, ToPointsArray(corners));
+						
+						var points = corners.Select(p => new System.Drawing.Point(p.X, p.Y));						
+                        g.DrawPolygon(pen, points.ToArray());
 
                         // Extract the card bitmap
                         QuadrilateralTransformation transformFilter = new QuadrilateralTransformation(corners, 211, 298);
@@ -174,56 +161,6 @@ namespace PoolVision
 
             filteredBitmap = bm;
         }
-
-        // Move the corners a fixed amount
-        private void shiftCorners(List<IntPoint> corners, IntPoint point)
-        {
-            int xOffset = point.X - corners[0].X;
-            int yOffset = point.Y - corners[0].Y;
-
-            for (int x = 0; x < corners.Count; x++)
-            {
-                IntPoint point2 = corners[x];
-
-                point2.X += xOffset;
-                point2.Y += yOffset;
-
-                corners[x] = point2;
-            }
-        }
-
-
-        private void rearrangeCorners(List<IntPoint> corners)
-        {
-            float[] pointDistances = new float[4];
-
-            for (int x = 0; x < corners.Count; x++)
-            {
-                IntPoint point = corners[x];
-
-                pointDistances[x] = point.DistanceTo( (x == (corners.Count - 1) ? corners[0] : corners[x + 1]) ) ;
-            }
-
-            float shortestDist = float.MaxValue;
-            Int32 shortestSide = Int32.MaxValue;
-
-            for (int x = 0; x < corners.Count; x++)
-            {
-                if (pointDistances[x] < shortestDist)
-                {
-                    shortestSide = x;
-                    shortestDist = pointDistances[x];
-                }
-            }
-
-            if (shortestSide != 0 && shortestSide != 2)
-            {
-                IntPoint endPoint = corners[0];
-                corners.RemoveAt(0);
-                corners.Add(endPoint);
-            }
-        }
-
 
         private void Form1_Load(object sender, EventArgs e)
         {
@@ -295,20 +232,6 @@ namespace PoolVision
             }
         }
          
-
-        // Conver list of AForge.NET's points to array of .NET points
-        private System.Drawing.Point[] ToPointsArray(List<IntPoint> points)
-        {
-            System.Drawing.Point[] array = new System.Drawing.Point[points.Count];
-
-            for (int i = 0, n = points.Count; i < n; i++)
-            {
-                array[i] = new System.Drawing.Point(points[i].X, points[i].Y);
-            }
-
-            return array;
-        }
-
         private void camWindow_MouseClick(object sender, MouseEventArgs e)
         {
             lock (_locker)
