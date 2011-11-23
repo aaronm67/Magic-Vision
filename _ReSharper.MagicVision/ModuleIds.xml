@@ -1,5 +1,0 @@
-<Modules>
-  <Module PersistentId="16368921-34E9-42A4-9500-DD85034926AE" ModuleId="Data" />
-  <Module PersistentId="6E246F05-9296-492B-B7F9-DCC99ED6FD4B" ModuleId="MagicVision" />
-  <Module PersistentId="8C0015DB-69E1-46E7-8705-3A4F8BE2E5E7" ModuleId="DirectX.Capture" />
-</Modules>
