@@ -21,7 +21,7 @@ namespace PoolVision
     public partial class Form1 : Form
     {
         private Filters cameraFilters = new Filters();
-        Data.CardStore sql = new MySqlClient();
+        //Data.CardStore sql = new MySqlClient();
         private String refCardDir = @"C:\Users\Pete\Pictures\New Phyrexia\Crops\";
         Capture capture;
 
